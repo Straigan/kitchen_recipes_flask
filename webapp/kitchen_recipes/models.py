@@ -6,7 +6,7 @@ from webapp.db import db
 
 
 class Category(db.Model, BaseNestedSets):
-    id = db.Column(db.integer)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), index=True, unique=True)
 
     def __repr__(self):
@@ -14,7 +14,7 @@ class Category(db.Model, BaseNestedSets):
 
 
 class Recipe(db.Model):
-    id = db.Column(db.integer)
+    id = db.Column(db.Integer, primary_key=True)
     category_id = db.Column(db.Integer, db.ForeignKey(Category.id))
     category = relationship('Category', backref='recipes', lazy='joined')
     name = db.Column(db.String(180), index=True, nullable=False)
