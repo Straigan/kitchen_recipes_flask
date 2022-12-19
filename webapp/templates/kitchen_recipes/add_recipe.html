@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="blog_area section_padding_0_80">
+    <div class="container">
+        <div class="row justify-content-center">
+            <section class="col-12 col-lg-8">
+                <section class="row">
+
+                    <!-- Single Post -->
+                    <div class="col-12">
+                        <div class="single-post wow fadeInUp" data-wow-delay=".2s">
+                            <!-- Post Content -->
+                            <div class="post-content">
+                                <form action="{{ url_for('kitchen_recipes.process_add_recipe') }}" method="POST"  enctype="multipart/form-data">
+                                    {{ form.hidden_tag() }}
+                            
+                                    <p>{{ form.category.label() }}</p>
+                                    <p>{{ form.category() }}</p>
+
+                                    <p>{{ form.name.label() }}</p>
+                                    <p>{{ form.name() }}</p>
+
+                                    <p>{{ form.description.label() }}</p>
+                                    <p>{{ form.description() }}</p>
+
+                                    <p>{{ form.submit() }}</p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </div>
+    </div>
+</section>
+
+    
+
+{% endblock %}
