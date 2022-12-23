@@ -15,20 +15,20 @@
                         <div class="single-post wow fadeInUp" data-wow-delay=".2s">
                             <!-- Post Content -->
                             <div class="post-content">
-                                <form action="{{ url_for('kitchen_recipes.process_add_recipe') }}" method="POST"  enctype="multipart/form-data">
+                                <form action="{{ url_for('user.process_sign_in_user') }}" method="POST">
+                                    {{ form_login.hidden_tag() }}
                                     
-                                    {{ form_add_recipe.hidden_tag() }}
                                     <br>
-                                    <p>{{ form_add_recipe.category.label() }}</p>
-                                    <p>{{ form_add_recipe.category() }}</p>
+                                    <p>{{ form_login.email.label() }}</p>
+                                    <p>{{ form_login.email() }}</p>
 
-                                    <p>{{ form_add_recipe.name.label() }}</p>
-                                    <p>{{ form_add_recipe.name() }}</p>
+                                    <p>{{ form_login.password.label() }}</p>
+                                    <p>{{ form_login.password() }}</p>
 
-                                    <p>{{ form_add_recipe.description.label() }}</p>
-                                    <p>{{ form_add_recipe.description() }}</p>
+                                    {{ form_login.remember_me.label() }}
+                                    {{ form_login.remember_me() }}
 
-                                    <p>{{ form_add_recipe.submit() }}</p>
+                                    <p>{{ form_login.submit() }}</p>
                                 </form>
                             </div>
                         </div>

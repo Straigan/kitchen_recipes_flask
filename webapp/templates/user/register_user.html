@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% include "title_blueberry.html" %}
+
+<section class="blog_area section_padding_0_80">
+    <div class="container">
+        <div class="row justify-content-center">
+            <section class="col-12 col-lg-8">
+                <section class="row">
+
+                    <!-- Single Post -->
+                    <div class="col-12">
+                        <div class="single-post wow fadeInUp" data-wow-delay=".2s">
+                            <!-- Post Content -->
+                            <div class="post-content">
+                                <form action="{{ url_for('user.process_register_user') }}" method="POST"  enctype="multipart/form-data">
+                                    {{ form_register.hidden_tag() }}
+                                    
+                                    <br>
+                                    <p>{{ form_register.email.label() }}</p>
+                                    <p>{{ form_register.email() }}</p>
+
+                                    <p>{{ form_register.phone_number.label() }}</p>
+                                    <p>{{ form_register.phone_number() }}</p>
+
+                                    <p>{{ form_register.full_name.label() }}</p>
+                                    <p>{{ form_register.full_name() }}</p>
+
+                                    <p>{{ form_register.password.label() }}</p>
+                                    <p>{{ form_register.password() }}</p>
+
+                                    <p>{{ form_register.password2.label() }}</p>
+                                    <p>{{ form_register.password2() }}</p>
+
+                                    <p>{{ form_register.submit() }}</p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </div>
+    </div>
+</section>
+
+    
+
+{% endblock %}

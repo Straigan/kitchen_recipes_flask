@@ -19,7 +19,7 @@ class RegistrationForm(FlaskForm):
     full_name = StringField('Полное имя', render_kw={"class": "form-control"})
     password = PasswordField('Пароль', validators=[DataRequired()], render_kw={"class": "form-control"})
     password2 = PasswordField('Повторите пароль', validators=[DataRequired(), EqualTo('password')], render_kw={"class": "form-control"})
-    submit = SubmitField('Отправить!', render_kw={"class": "btn contact-btn"})
+    submit = SubmitField('Зарегистрироваться', render_kw={"class": "btn contact-btn"})
 
 
     def validate_email(self, email):

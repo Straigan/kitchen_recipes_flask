@@ -21,11 +21,11 @@ def index():
 @blueprint.route('/add_recipe')
 def add_recipe():
     title = 'Добавление рецепта'
-    form = AddNewRecipeForm()
+    form_add_recipe = AddNewRecipeForm()
     return render_template(
         'kitchen_recipes/add_recipe.html',
         title=title,
-        form=form
+        form_add_recipe=form_add_recipe
     )
 
 
