@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy_mptt.mixins import BaseNestedSets
 
 from webapp.db import db
+from webapp.user.models import User
 
 
 class Category(db.Model, BaseNestedSets):
@@ -19,6 +20,8 @@ class Recipe(db.Model):
     category = relationship('Category', backref='recipes', lazy='joined')
     name = db.Column(db.String(180), index=True, nullable=False)
     description = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    user = relationship('User', backref='recipes')
     create_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     def __repr__(self):

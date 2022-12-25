@@ -1,4 +1,5 @@
 from flask import Blueprint, flash, render_template, redirect, url_for
+from flask_login import current_user
 
 from webapp.kitchen_recipes.forms import AddNewRecipeForm
 from webapp.kitchen_recipes.models import Recipe
@@ -35,6 +36,7 @@ def process_add_recipe():
     if form.validate_on_submit():
         new_recipe = Recipe(
             category_id = form.category.data,
+            user_id=current_user.id,
             name = form.name.data,
             description = form.description.data,
         )
