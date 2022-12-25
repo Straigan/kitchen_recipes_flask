@@ -5,6 +5,7 @@ from webapp.db import db
 from webapp.user.forms import LoginForm, RegistrationForm
 from webapp.user.models import User
 from webapp.services.service_redirect_utils import redirect_back
+from webapp.services.service_empty_field_form import replacing_an_empty_field_with_None
 from webapp.user.enums import UserRole
 
 
@@ -65,11 +66,12 @@ def process_register_user():
     form = RegistrationForm()
 
     if form.validate_on_submit():
+
         new_user = User(
             email=form.email.data,
-            phone_number = form.phone_number.data,
+            phone_number=replacing_an_empty_field_with_None(form.phone_number.data),
             role=UserRole.user,
-            full_name=form.full_name.data,
+            full_name=replacing_an_empty_field_with_None(form.full_name.data),
         )
         new_user.set_password(form.password.data)
         db.session.add(new_user)
