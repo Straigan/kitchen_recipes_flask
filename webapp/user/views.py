@@ -71,7 +71,9 @@ def process_register_user():
             email=form.email.data,
             phone_number=replacing_an_empty_field_with_None(form.phone_number.data),
             role=UserRole.user,
-            full_name=replacing_an_empty_field_with_None(form.full_name.data),
+            nick_name=replacing_an_empty_field_with_None(form.nick_name.data),
+            first_name=replacing_an_empty_field_with_None(form.first_name.data),
+            last_name=replacing_an_empty_field_with_None(form.last_name.data)
         )
         new_user.set_password(form.password.data)
         db.session.add(new_user)

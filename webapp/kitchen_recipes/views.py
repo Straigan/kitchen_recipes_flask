@@ -12,11 +12,18 @@ blueprint = Blueprint('kitchen_recipes', __name__)
 def index():
     title = "Главная страница"
     context = "Рецепты"
+    recipes = Recipe.query.all()
     return render_template(
         'kitchen_recipes/index.html',
         title=title,
         context=context,
+        recipes=recipes
     )
+
+
+# @blueprint.route('/<int:recipe_id>')
+# def page_recipe(recipe_id):
+
 
 
 @blueprint.route('/add_recipe')
@@ -53,3 +60,16 @@ def process_add_recipe():
                 error
             ))
     return redirect(url_for('kitchen_recipes.add_recipe'))
+
+
+@blueprint.route('/delete_recipe/<int:recipe_id>')
+def process_delete_recipe(recipe_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('kitchen_recipes.index'))
+    else:
+        delete_recipe = Recipe.query.filter(Recipe.user_id == current_user.user_id,
+                                            Recipe.id == recipe_id
+                                    ).delete()
+        db.session.commit()
+        flash('Вы успешно удалили рецепт')
+        return redirect(url_for('kitchen_recipes.index'))
