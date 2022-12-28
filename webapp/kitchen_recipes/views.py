@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, render_template, redirect, url_for
+from flask import Blueprint, flash, render_template, redirect, url_for, abort
 from flask_login import current_user
 
 from webapp.kitchen_recipes.forms import AddNewRecipeForm
@@ -21,9 +21,15 @@ def index():
     )
 
 
-# @blueprint.route('/<int:recipe_id>')
-# def page_recipe(recipe_id):
-
+@blueprint.route('/<int:recipe_id>')
+def page_recipe(recipe_id):
+    recipe = Recipe.query.filter(Recipe.id == recipe_id).first()
+    if not recipe:
+        abort(404)
+    return render_template(
+        'kitchen_recipes/page_recipe.html',
+        recipe=recipe
+    )    
 
 
 @blueprint.route('/add_recipe')
@@ -67,7 +73,7 @@ def process_delete_recipe(recipe_id):
     if not current_user.is_authenticated:
         return redirect(url_for('kitchen_recipes.index'))
     else:
-        delete_recipe = Recipe.query.filter(Recipe.user_id == current_user.user_id,
+        delete_recipe = Recipe.query.filter(Recipe.user_id == current_user.id,
                                             Recipe.id == recipe_id
                                     ).delete()
         db.session.commit()
