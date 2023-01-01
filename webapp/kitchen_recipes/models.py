@@ -27,3 +27,13 @@ class Recipe(db.Model):
     def __repr__(self):
         return f'<Recipe name {self.name}, id {self.id}, category {self.category}>'
 
+
+class Photo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    recipe_id = db.Column(db.Integer, db.ForeignKey(Recipe.id))
+    recipe = relationship('Recipe', backref='photos')
+    photo_path = db.Column(db.String, nullable=False)
+
+    def __repr__(self):
+        return f'<Photo {self.photos_path}, id {self.id}, recipe {self.recipe}>'
+

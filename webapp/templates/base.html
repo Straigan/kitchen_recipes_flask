@@ -53,6 +53,9 @@
                                             <a href="#">Привет, {{ current_user.first_name }}</a>
                                         {% endif %}
                                     </div>
+                                    <div class="login">
+                                        <a href="{{ url_for('kitchen_recipes.add_recipe') }}">Добавить рецепт</a>
+                                    </div>
                                     <div class="register">
                                         <a href="{{ url_for('user.logout') }}">Выход</a>
                                     </div>
@@ -73,6 +76,17 @@
                     </div>
                     
                 </div>
+            </div>
+            <div class="row">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert alert-warning" role="alert">
+                        {% for message in messages %}
+                            {{ message }}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% endwith %}
             </div>
         </div>
     </div>

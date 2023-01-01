@@ -2,7 +2,8 @@ from flask import Blueprint, flash, render_template, redirect, url_for, abort
 from flask_login import current_user
 
 from webapp.kitchen_recipes.forms import AddNewRecipeForm
-from webapp.kitchen_recipes.models import Recipe
+from webapp.kitchen_recipes.models import Recipe, Photo
+from webapp.services.service_photo import is_extension_allowed, save_files
 from webapp.db import db
 
 
@@ -47,6 +48,15 @@ def add_recipe():
 def process_add_recipe():
     form = AddNewRecipeForm()
     if form.validate_on_submit():
+
+        photo = form.photo.data
+
+        if is_extension_allowed(photo) == False:
+            flash('Можно добавить изображения с расширеним png, jpg, jpeg')
+            return redirect(url_for('marketplace.add_product'))
+
+        photo_path = save_files(photo)
+
         new_recipe = Recipe(
             category_id = form.category.data,
             user_id=current_user.id,
@@ -56,6 +66,16 @@ def process_add_recipe():
     
         db.session.add(new_recipe)
         db.session.commit()
+
+        new_recipe_photo = Photo(
+            recipe_id=new_recipe.id,
+            photo_path=photo_path
+        )
+
+        db.session.add(new_recipe_photo)
+        db.session.commit()
+
+        
     
         flash('Вы добавили рецепт')
         return redirect(url_for('kitchen_recipes.index'))
