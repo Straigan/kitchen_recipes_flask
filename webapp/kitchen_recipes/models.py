@@ -30,10 +30,10 @@ class Recipe(db.Model):
 
 class Photo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    recipe_id = db.Column(db.Integer, db.ForeignKey(Recipe.id))
-    recipe = relationship('Recipe', backref='photos')
+    recipe_id = db.Column(db.Integer, db.ForeignKey(Recipe.id, ondelete='CASCADE'))
+    recipe = relationship('Recipe', backref='photo')
     photo_path = db.Column(db.String, nullable=False)
 
     def __repr__(self):
-        return f'<Photo {self.photos_path}, id {self.id}, recipe {self.recipe}>'
+        return f'<Photo {self.photo_path}, id {self.id}, recipe {self.recipe}>'
 

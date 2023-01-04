@@ -53,10 +53,8 @@ def process_sign_in_user():
             login_user(user, remember=form.remember_me.data)
 
             flash("Вы успешно вошли на сайт")
-            print('1')
             return redirect(url_for('kitchen_recipes.index'))
 
-        print('2')
         flash('Не правильные имя или пароль')
         return redirect(url_for('user.login_user'))
 

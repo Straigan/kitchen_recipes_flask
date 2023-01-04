@@ -34,7 +34,7 @@
                             <div class="single-post">
                                 <!-- Post Thumb -->
                                 <div class="post-thumb">
-                                    <img src="img/blog-img/10.jpg" alt="">
+                                    <img src="{{ url_for('static', filename=recipe.photo[0].photo_path) }}" alt="{{ recipe.name }}">
                                 </div>
                                 <!-- Post Content -->
                                 <div class="post-content">
