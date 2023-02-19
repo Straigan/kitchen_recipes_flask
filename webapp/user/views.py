@@ -6,6 +6,7 @@ from webapp.user.forms import LoginForm, RegistrationForm
 from webapp.user.models import User
 from webapp.services.service_redirect_utils import redirect_back
 from webapp.services.service_empty_field_form import replacing_an_empty_field_with_None
+from webapp.services.service_mail import send_mail
 from webapp.user.enums import UserRole
 
 
@@ -73,9 +74,11 @@ def process_register_user():
             first_name=replacing_an_empty_field_with_None(form.first_name.data),
             last_name=replacing_an_empty_field_with_None(form.last_name.data)
         )
+        sent_to_email = form.email.data
         new_user.set_password(form.password.data)
         db.session.add(new_user)
         db.session.commit()
+        send_mail(sent_to_email)
         flash('Вы успешно зарегистрировались и авторизовались')
         login_user(new_user)
         return redirect(url_for('kitchen_recipes.index'))

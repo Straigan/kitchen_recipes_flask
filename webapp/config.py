@@ -12,3 +12,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 UPLOAD_PATH = os.path.join(basedir, 'static', 'media')
 ALLOWED_IMAGE = set(['png', 'jpg', 'jpeg'])
 MEDIA_FOLDER = 'media'
+MAIL_SERVER=os.environ['MAIL_SERVER']
+MAIL_PORT=os.environ['MAIL_PORT']
+MAIL_USERNAME=os.environ['MAIL_USERNAME']
+MAIL_PASSWORD=os.environ['MAIL_PASSWORD']

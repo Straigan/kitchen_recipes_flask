@@ -184,7 +184,7 @@
                                 <div class="single-post wow fadeInUp" data-wow-delay=".4s">
                                     <!-- Post Thumb -->
                                     <div class="post-thumb">
-                                        <!-- тут картинка рецепта-->
+                                        <img src="{{ url_for('static', filename=recipe.photo[0].photo_path) }}" alt="{{ recipe.name }}">
                                     </div>
                                     <!-- Post Content -->
                                     <div class="post-content">
