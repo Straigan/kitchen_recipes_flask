@@ -16,3 +16,5 @@ MAIL_SERVER=os.environ['MAIL_SERVER']
 MAIL_PORT=os.environ['MAIL_PORT']
 MAIL_USERNAME=os.environ['MAIL_USERNAME']
 MAIL_PASSWORD=os.environ['MAIL_PASSWORD']
+CELERY_BROKER_URL = 'redis://localhost:32701/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:32701/0'

@@ -7,7 +7,7 @@ from webapp.user.views import blueprint as user_blueprint
 from webapp.db import db
 from webapp.kitchen_recipes.models import Category, Recipe
 from webapp.user.models import User
-
+from webapp.celery_app import celery
 
 def create_app():
     app = Flask(__name__)
@@ -23,5 +23,5 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(user_id)
-        
+
     return app
