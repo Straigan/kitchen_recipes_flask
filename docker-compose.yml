@@ -10,3 +10,7 @@ services:
       POSTGRES_USER:  root
       POSTGRES_PASSWORD:  root
       POSTGRES_DB: kitchen_recipes
+  redis:
+    image: redis:latest
+    ports:
+      - "32701:6379"

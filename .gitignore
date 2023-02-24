@@ -130,3 +130,6 @@ dmypy.json
 
 #Media files
 media/
+
+#Data Base
+data/
