@@ -16,5 +16,5 @@ jobs:
         with:
           python-version: 3.10.6
       - name: Install deps
-        run: |
+        run:
           pip install -r requirements.txt
