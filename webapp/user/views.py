@@ -5,7 +5,7 @@ from webapp.db import db
 from webapp.user.forms import LoginForm, RegistrationForm
 from webapp.user.models import User
 from webapp.services.service_redirect_utils import redirect_back
-from webapp.services.service_empty_field_form import replacing_an_empty_field_with_None
+from webapp.services.service_empty_field_form import replacing_an_empty_field_with_none
 from webapp.user.tasks import send_mail
 from webapp.user.enums import UserRole
 
@@ -68,11 +68,11 @@ def process_register_user():
 
         new_user = User(
             email=form.email.data,
-            phone_number=replacing_an_empty_field_with_None(form.phone_number.data),
+            phone_number=replacing_an_empty_field_with_none(form.phone_number.data),
             role=UserRole.user,
-            nick_name=replacing_an_empty_field_with_None(form.nick_name.data),
-            first_name=replacing_an_empty_field_with_None(form.first_name.data),
-            last_name=replacing_an_empty_field_with_None(form.last_name.data)
+            nick_name=replacing_an_empty_field_with_none(form.nick_name.data),
+            first_name=replacing_an_empty_field_with_none(form.first_name.data),
+            last_name=replacing_an_empty_field_with_none(form.last_name.data)
         )
         params_send_email = {
             'send_to_email': form.email.data

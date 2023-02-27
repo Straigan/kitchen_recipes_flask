@@ -1,10 +1,15 @@
-import uuid
 import os
+import uuid
 
-from webapp.config import UPLOAD_PATH, ALLOWED_IMAGE, MEDIA_FOLDER
+from webapp.config import ALLOWED_IMAGE, MEDIA_FOLDER, UPLOAD_PATH
+from wtforms import FileField
+
+cls = 'Класс'
 
 
-def is_extension_allowed(photo):
+def is_extension_allowed(photo: FileField) -> bool:
+    """Проверка на допустимое расширение картинки"""
+
     photo_name = photo.filename
     extension = photo_name.split('.')[-1]
     if extension in ALLOWED_IMAGE:
@@ -13,9 +18,13 @@ def is_extension_allowed(photo):
         return False
 
 
-def save_files(photo):
-    photo_path = ''
+def save_files(photo: FileField) -> str:
+    """
+    Сохраниение загружамой картинки с возратом пути
+    по которому сохранена картинка
+    """
 
+    photo_path = ''
     photo_name = photo.filename
     unique_filename = str(uuid.uuid4())
     extension = photo_name.split('.')[-1]
