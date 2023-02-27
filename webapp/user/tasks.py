@@ -1,4 +1,4 @@
-import smtplib
+from smtplib import SMTPRecipientsRefused, SMTP_SSL
 from typing import Dict
 
 from webapp.celery_app import celery
@@ -13,15 +13,14 @@ def send_mail(params_send_email: Dict[str, FileField]) -> None:
 
     send_from_email = MAIL_USERNAME
     email_text = 'Hello, thank you for registering on our site.'
-    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server = SMTP_SSL('smtp.gmail.com', 465)
     server.ehlo()
     server.login(MAIL_USERNAME, MAIL_PASSWORD)
 
     try:
         server.sendmail(send_from_email, params_send_email['send_to_email'], email_text)
-    except:
+    except SMTPRecipientsRefused:
         print('Something went wrong...')
 
     server.close()
     print('Email send!')
-    
