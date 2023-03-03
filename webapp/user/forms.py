@@ -1,9 +1,9 @@
-
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 from webapp.user.models import User
+
+from wtforms import BooleanField, PasswordField, StringField, SubmitField
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 
 class LoginForm(FlaskForm):
@@ -20,17 +20,16 @@ class RegistrationForm(FlaskForm):
     first_name = StringField('Имя', render_kw={"class": "form-control"})
     last_name = StringField('Фамилия', render_kw={"class": "form-control"})
     password = PasswordField('Пароль', validators=[DataRequired()], render_kw={"class": "form-control"})
-    password2 = PasswordField('Повторите пароль', validators=[DataRequired(), EqualTo('password')], render_kw={"class": "form-control"})
+    password2 = PasswordField('Повторите пароль', validators=[DataRequired(), EqualTo('password')],
+                              render_kw={"class": "form-control"})
     submit = SubmitField('Зарегистрироваться', render_kw={"class": "btn contact-btn"})
 
-
-    def validate_email(self, email):
+    def validate_email(self, email: str) -> ValidationError:
         user_count = User.query.filter_by(email=email.data).count()
         if user_count > 0:
             raise ValidationError('Пользователь с таким адресом уже существует')
 
-
-    def validate_phone_number(self, phone_number):
+    def validate_phone_number(self, phone_number: str) -> ValidationError:
         if phone_number.data:
             user_count = User.query.filter_by(phone_number=phone_number.data).count()
             if user_count > 0:

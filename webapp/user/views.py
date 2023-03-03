@@ -1,20 +1,22 @@
-from flask import Blueprint, flash, render_template, redirect, url_for, jsonify, session, request, Markup
-from flask_login import login_user, logout_user, current_user
+from flask import Blueprint, flash, redirect, render_template, url_for
+
+from flask_login import current_user, login_user, logout_user
 
 from webapp.db import db
+from webapp.services.service_empty_field_form import replacing_an_empty_field_with_none
+from webapp.services.service_redirect_utils import redirect_back
+from webapp.user.enums import UserRole
 from webapp.user.forms import LoginForm, RegistrationForm
 from webapp.user.models import User
-from webapp.services.service_redirect_utils import redirect_back
-from webapp.services.service_empty_field_form import replacing_an_empty_field_with_none
 from webapp.user.tasks import send_mail
-from webapp.user.enums import UserRole
 
+from werkzeug.wrappers import Response
 
 blueprint = Blueprint('user', __name__, url_prefix='/users')
 
 
 @blueprint.route('/sign_in_user')
-def sign_in_user():
+def sign_in_user() -> Response | str:
     if current_user.is_authenticated:
         return redirect_back()
 
@@ -29,7 +31,7 @@ def sign_in_user():
 
 
 @blueprint.route('/register_user')
-def register_user():
+def register_user() -> Response | str:
     if current_user.is_authenticated:
         return redirect_back()
 
@@ -44,7 +46,7 @@ def register_user():
 
 
 @blueprint.route('/process_sign_in_user', methods=['POST'])
-def process_sign_in_user():
+def process_sign_in_user() -> Response:
     form = LoginForm()
 
     if form.validate_on_submit():
@@ -61,7 +63,7 @@ def process_sign_in_user():
 
 
 @blueprint.route('/process_register_user', methods=['POST'])
-def process_register_user():
+def process_register_user() -> Response:
     form = RegistrationForm()
 
     if form.validate_on_submit():
@@ -95,9 +97,8 @@ def process_register_user():
     return redirect(url_for('user.register_user'))
 
 
-
 @blueprint.route('/logout')
-def logout():
+def logout() -> Response:
     logout_user()
     flash('Вы успешно вышли из сайта')
     return redirect(url_for('kitchen_recipes.index'))

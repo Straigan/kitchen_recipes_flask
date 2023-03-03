@@ -1,9 +1,11 @@
 from datetime import datetime
+
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, SelectField, DateTimeField, FileField
-from wtforms.validators import DataRequired
 
 from webapp.kitchen_recipes.models import Category
+
+from wtforms import DateTimeField, FileField, SelectField, StringField, SubmitField, TextAreaField
+from wtforms.validators import DataRequired
 
 
 class AddNewRecipeForm(FlaskForm):
