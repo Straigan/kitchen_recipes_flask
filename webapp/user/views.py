@@ -26,7 +26,7 @@ def sign_in_user() -> Response | str:
     return render_template(
         'user/sign_in_user.html',
         title=title,
-        form_login=form_login
+        form_login=form_login,
     )
 
 
@@ -74,11 +74,10 @@ def process_register_user() -> Response:
             role=UserRole.user,
             nick_name=replacing_an_empty_field_with_none(form.nick_name.data),
             first_name=replacing_an_empty_field_with_none(form.first_name.data),
-            last_name=replacing_an_empty_field_with_none(form.last_name.data)
+            last_name=replacing_an_empty_field_with_none(form.last_name.data),
         )
         params_send_email = {
-            'send_to_email': form.email.data
-        }
+            'send_to_email': form.email.data}
         new_user.set_password(form.password.data)
         db.session.add(new_user)
         db.session.commit()
@@ -92,8 +91,7 @@ def process_register_user() -> Response:
             for error in errors:
                 flash("Ошибка в поле {}: {}".format(
                     getattr(form, field).label.text,
-                    error
-                ))
+                    error))
     return redirect(url_for('user.register_user'))
 
 

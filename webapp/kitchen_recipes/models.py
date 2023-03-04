@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from sqlalchemy.orm import relationship
+
 from sqlalchemy_mptt.mixins import BaseNestedSets
 
 from webapp.db import db
@@ -23,7 +25,7 @@ class Recipe(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
     user = relationship('User', backref='recipes')
     create_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
+
     def __repr__(self):
         return f'<Recipe name {self.name}, id {self.id}, category {self.category}>'
 
@@ -36,4 +38,3 @@ class Photo(db.Model):
 
     def __repr__(self):
         return f'<Photo {self.photo_path}, id {self.id}, recipe {self.recipe}>'
-
