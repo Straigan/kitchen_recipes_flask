@@ -1,5 +1,4 @@
 import pandas
-from psycopg2 import errors
 
 from webapp import create_app
 from webapp.db import db
@@ -13,9 +12,10 @@ def dataframe_from_excel(data) -> pandas.DataFrame:
 
     return products_frame
 
+
 def copy_category_in_db(dataset):
-    categoies = dataset['category_name'].unique()
-    for category in categoies:
+    categories = dataset['category_name'].unique()
+    for category in categories:
         category_in_db = Category.query.filter(Category.name == category).first()
         if category == '':
             continue
@@ -25,7 +25,6 @@ def copy_category_in_db(dataset):
         else:
             new_category = Category(name=category)
             db.session.add(new_category)
-    
     db.session.commit()
     return print('Записи добавленны')
 
@@ -42,15 +41,13 @@ def copy_recipe_in_db(dataset):
             elif recipe:
                 if row['recipe_name'] == recipe.name:
                     continue
-            elif row['category_name'] in dict_id_categories:
-                
+            elif row['category_name'] in dict_id_categories:         
                 new_recipe = Recipe(
                     name=row['recipe_name'],
                     description=row['description'],
                     category_id=dict_id_categories[row['category_name']],
                     user_id=user_role_admin.id,
                 )
-                    
                 db.session.add(new_recipe)
     except:
         return print('''Отсуствуют не обоходимые данные для колонок:
@@ -61,7 +58,7 @@ def copy_recipe_in_db(dataset):
 
 def copy_images_in_db(dataset):
     recipes = Recipe.query.all()
-    dist_id_recipes = {recipe.name: recipe.id for recipe in recipes }
+    dist_id_recipes = {recipe.name: recipe.id for recipe in recipes}
     for _, row in dataset.iterrows():
         photo_path_in_db = Photo.query.filter(Photo.photo_path == row['photo_path']).first()
         if row['photo_path'] == '':

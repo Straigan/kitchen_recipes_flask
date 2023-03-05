@@ -20,7 +20,7 @@ def create_app():
     login_manager.login_view = 'user.login'
     db.init_app(app)
     Migrate(app, db)
-
+    
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(user_id)
