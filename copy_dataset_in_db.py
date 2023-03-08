@@ -1,8 +1,10 @@
 import pandas
 
+from sqlalchemy import exc
+
 from webapp import create_app
 from webapp.db import db
-from webapp.kitchen_recipes.models import Category, Recipe, Photo
+from webapp.kitchen_recipes.models import Category, Photo, Recipe
 from webapp.user.models import User
 
 
@@ -20,8 +22,8 @@ def copy_category_in_db(dataset):
         if category == '':
             continue
         elif category_in_db:
-            category == category_in_db.name
-            continue
+            if category == category_in_db.name:
+                continue
         else:
             new_category = Category(name=category)
             db.session.add(new_category)
@@ -41,7 +43,7 @@ def copy_recipe_in_db(dataset):
             elif recipe:
                 if row['recipe_name'] == recipe.name:
                     continue
-            elif row['category_name'] in dict_id_categories:         
+            elif row['category_name'] in dict_id_categories:
                 new_recipe = Recipe(
                     name=row['recipe_name'],
                     description=row['description'],
@@ -49,7 +51,7 @@ def copy_recipe_in_db(dataset):
                     user_id=user_role_admin.id,
                 )
                 db.session.add(new_recipe)
-    except:
+    except exc.SQLAlchemyError:
         return print('''Отсуствуют не обоходимые данные для колонок:
                         название рецепта, описание, категория или пользователь с ролью админ''')
     db.session.commit()

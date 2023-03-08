@@ -2,6 +2,7 @@ import os
 import uuid
 
 from webapp.config import ALLOWED_IMAGE, MEDIA_FOLDER, UPLOAD_PATH
+
 from wtforms import FileField
 
 cls = 'Класс'

@@ -1,5 +1,5 @@
-from urllib.parse import urljoin, urlparse
 from typing import Any
+from urllib.parse import urljoin, urlparse
 
 from flask import redirect, request, url_for
 
