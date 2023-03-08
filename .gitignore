@@ -133,7 +133,3 @@ media/
 
 #Data Base
 data/
-
-#flake8
-.vscode/
-setup.cfg
