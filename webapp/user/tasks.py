@@ -1,5 +1,6 @@
 from smtplib import SMTPRecipientsRefused, SMTP_SSL
 from typing import Dict
+
 from loguru import logger
 
 from webapp.celery_app import celery
