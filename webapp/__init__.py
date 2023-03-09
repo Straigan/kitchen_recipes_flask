@@ -4,6 +4,8 @@ from flask_login import LoginManager
 
 from flask_migrate import Migrate
 
+from loguru import logger
+
 from webapp.db import db
 from webapp.kitchen_recipes.views import blueprint as kitchen_recipes_blueprint
 from webapp.user.models import User
@@ -21,6 +23,7 @@ def create_app():
     db.init_app(app)
     Migrate(app, db)
     login_manager.user_loader
+    logger.add("log.log", rotation="25 MB")
 
     def load_user(user_id):
         return User.query.get(user_id)

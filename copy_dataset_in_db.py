@@ -1,3 +1,5 @@
+from loguru import logger
+
 import pandas
 
 from sqlalchemy import exc
@@ -28,7 +30,7 @@ def copy_category_in_db(dataset):
             new_category = Category(name=category)
             db.session.add(new_category)
     db.session.commit()
-    return print('Записи добавленны')
+    logger.info("Категории скопированы из excel в DB")
 
 
 def copy_recipe_in_db(dataset):
@@ -52,10 +54,10 @@ def copy_recipe_in_db(dataset):
                 )
                 db.session.add(new_recipe)
     except exc.SQLAlchemyError:
-        return print('''Отсуствуют не обоходимые данные для колонок:
+        return logger.error('''Отсуствуют не обоходимые данные для колонок:
                         название рецепта, описание, категория или пользователь с ролью админ''')
     db.session.commit()
-    return print('Записи добавленны')
+    logger.info("Рецепты скопированы из excel в DB")
 
 
 def copy_images_in_db(dataset):
@@ -75,7 +77,7 @@ def copy_images_in_db(dataset):
             )
             db.session.add(new_image)
     db.session.commit()
-    return print('Записи добавленны')
+    logger.info("Пути к картинкам рецептов скопированы из excel в DB")
 
 
 if __name__ == '__main__':
